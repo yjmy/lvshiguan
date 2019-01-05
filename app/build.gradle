@@ -1,0 +1,126 @@
+apply plugin: 'com.android.application'
+
+apply plugin: "com.mob.sdk"
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'lvshiguan'
+            keyPassword 'lvshiguan888'
+            storeFile file('D:/app/sn/lvshiguan.jks')
+            storePassword 'lvshiguan888'
+        }
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.lvshiguan.app"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 81
+        versionName "2.2.9"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        multiDexKeepProguard file('multiDexKeep.pro') // keep specific classes using proguard syntax
+        multiDexKeepFile file('multiDexKeep.txt') // keep specific classes
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+android {    useLibrary 'org.apache.http.legacy'}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.android.support:multidex:1.0.1'
+    //implementation fileTree(include: ['*.jar'], dir: 'libs/sharesdk')
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation files('libs/gesture-imageview.jar')
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.YancyYe:GalleryPick:1.2.1'
+    //implementation 'com.facebook.fresco:fresco:0.12.0'
+    implementation files('libs/core-3.2.1.jar')
+    implementation files('libs/eventbus-1.0.1.jar')
+    implementation 'com.jacktuotuo.customview:verificationcodeview:1.0.2'
+    //权限
+    implementation 'com.werb.permissionschecker:permissionschecker:0.0.1-beta2'
+    //友盟数据统计
+    implementation files('libs/umeng-common-2.0.0.jar')
+    implementation files('libs/umeng-analytics-8.0.0.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    //implementation  'com.umeng.umsdk:analytics:7.5.4'
+    //implementation  'com.umeng.umsdk:common:1.5.4'
+    //倒计时
+    //implementation 'com.github.iwgang:countdownview:2.1.6'
+    //photo图片浏览
+    //implementation 'cn.bluemobi.dylan:photoview:1.4'
+    //implementation 'com.github.chrisbanes.photoview:library:+'
+    //输入验证码！
+    //compile files('libs/SQLiteStudioRemote.jar')
+
+}
+
+// 在MobSDK的扩展中注册ShareSDK的相关信息
+MobSDK {
+    appKey "2481b850f2be4"
+    appSecret "5126c732d2e7f47d5c677b9f58a71671"
+
+    ShareSDK {
+        /*gui false*/
+        devInfo {
+            Wechat {
+                appId "wxa029f87a25160ade"
+                appSecret "b4c7d8216c6b40f76068e354861ce4b5"
+                bypassApproval false
+            }
+            WechatMoments {
+                appId "wxa029f87a25160ade"
+                appSecret "b4c7d8216c6b40f76068e354861ce4b5"
+                bypassApproval false
+            }
+            QQ{
+                appId "1106565304"
+                appKey "Iq3TY4yNL4DHXMJU"
+                bypassApproval false
+                shareByAppClient true
+            }
+            SinaWeibo {
+                appKey "3600151047"
+                appSecret "dde4d1815c622966537f6ef7cf7fe848"
+                callbackUri "http://www.sharesdk.cn"
+                shareByAppClient true
+            }
+            /*Facebook{
+                appKey "1412473428822331"
+                appSecret "a42f4f3f867dc947b9ed6020c2e93558"
+                callbackUri "https://mob.com"
+                shareByAppClient true
+            }*/
+            /*Dingding{
+                appId "dingoanxyrpiscaovl4qlw"
+                bypassApproval false
+            }*/
+        }
+    }
+
+    SMSSDK{}
+}
